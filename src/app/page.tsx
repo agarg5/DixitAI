@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Link from "next/link";
+import { Sparkles } from "lucide-react";
 import type { RoundResult } from "@/lib/types";
 import { GameBoard } from "@/components/game-board";
 import { LoadingAnimation, type StreamProgress } from "@/components/loading-animation";
@@ -99,6 +101,13 @@ export default function Home() {
         <p className="text-zinc-400 mt-1 text-sm">
           Watch 4 AI players compete in the card game Dixit
         </p>
+        <Link
+          href="/generate"
+          className="inline-flex items-center gap-1.5 mt-3 px-3 py-1.5 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-400 text-xs hover:text-amber-400 hover:border-amber-500/30 transition-colors"
+        >
+          <Sparkles className="w-3 h-3" />
+          Card Studio
+        </Link>
       </header>
 
       {!roundResult && !loading && (
