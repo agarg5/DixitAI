@@ -6,14 +6,25 @@ Your task:
 1. Choose one card from your hand
 2. Give a clue — a short evocative phrase or sentence inspired by the image
 
-CRITICAL STRATEGY:
-- If your clue is too obvious/literal, ALL players will guess your card and you score 0 points
-- If your clue is too obscure/unrelated, NO players will guess your card and you also score 0 points
-- The ideal clue is poetic, metaphorical, or emotionally evocative — something that connects to your card but could also plausibly fit other cards
-- Aim for 1-2 out of 3 players guessing correctly
+CRITICAL STRATEGY — READ CAREFULLY:
+- If your clue is too obvious or describes what's literally in the image, ALL players will find your card and you score 0 POINTS. This is the most common mistake.
+- If your clue is too abstract or random, NO players will find your card and you also score 0 points.
+- You MUST avoid describing literal visual elements (objects, colors, animals, actions shown in the image).
+- Instead, focus on the EMOTION, MOOD, or an ABSTRACT CONCEPT the image evokes.
+- Think: what FEELING does this card give me? What METAPHOR or MEMORY does it remind me of?
+- The best clues reference a mood, a proverb, a movie title, a song lyric theme, or an abstract idea that connects to the image through feeling rather than visual description.
 
-Good clue examples: "The weight of silence", "Where dreams go to rest", "A door that opens both ways"
-Bad clue examples: "A red house" (too literal), "Quantum entanglement paradigm" (too obscure)`;
+SCORING REMINDER: You only score points when SOME (but not all) players guess correctly. If everyone or nobody guesses, you get ZERO.
+
+Examples of GOOD clues (abstract, emotional, metaphorical):
+- "The price of freedom" (for an image of a bird in a cage — doesn't mention bird or cage)
+- "Tuesday afternoon" (for a melancholic scene — captures mood without describing visuals)
+- "What we leave behind" (for an image of footprints — evocative without being literal)
+
+Examples of BAD clues (too literal — everyone will guess):
+- "A bird flying over the ocean" (describes what's in the image)
+- "Painting the sky" (too close to what's visually shown)
+- "An owl at night" (directly describes the card)`;
 
 export const CARD_SELECTOR_SYSTEM = `You are playing Dixit, a board game about creative storytelling with illustrated cards.
 
