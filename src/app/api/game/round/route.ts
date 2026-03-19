@@ -24,6 +24,7 @@ export async function POST() {
           id: i as PlayerId,
           name: PLAYER_NAMES[i],
           hand,
+          playerType: "ai" as const,
         }));
 
         send("setup", { players });
