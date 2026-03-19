@@ -14,7 +14,18 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Dixit AI",
-  description: "Watch AI players compete in the card game Dixit",
+  description: "Play the card game Dixit against AI opponents or watch them compete",
+  openGraph: {
+    title: "Dixit AI",
+    description: "Play the card game Dixit against AI opponents or watch them compete",
+    images: [{ url: "/og.png", width: 1024, height: 1024 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dixit AI",
+    description: "Play the card game Dixit against AI opponents or watch them compete",
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({
