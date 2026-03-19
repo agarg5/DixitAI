@@ -11,15 +11,17 @@ interface CardProps {
   highlighted?: boolean;
   correct?: boolean;
   incorrect?: boolean;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
   votes?: { playerName: string; color: string }[];
   onClick?: () => void;
 }
 
 const sizeClasses = {
+  xs: "w-6 h-9",
   sm: "w-20 h-[120px]",
   md: "w-28 h-[168px]",
   lg: "w-36 h-[216px]",
+  xl: "w-48 h-[288px]",
 };
 
 export function Card({

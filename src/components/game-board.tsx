@@ -37,7 +37,6 @@ export function GameBoard({ roundResult, onNewRound }: GameBoardProps) {
   const { players, storyteller, faceUpCards, votes, scores } = roundResult;
   const playerNames = players.map((p) => p.name);
 
-  // Build vote display data for face-up cards
   const getVotesForCard = (cardId: number) => {
     if (!phaseGte(currentPhase, "voting")) return [];
     return votes
@@ -52,7 +51,7 @@ export function GameBoard({ roundResult, onNewRound }: GameBoardProps) {
     cardId === storyteller.chosenCard;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Phase stepper */}
       <PhaseStepper currentPhase={currentPhase} />
 
@@ -82,50 +81,41 @@ export function GameBoard({ roundResult, onNewRound }: GameBoardProps) {
         )}
       </div>
 
-      {/* Player seats */}
-      <div className="grid grid-cols-4 gap-4">
+      {/* Compact player row */}
+      <div className="flex justify-center gap-6">
         {players.map((player) => (
           <div
             key={player.id}
             className={cn(
-              "rounded-lg p-3 transition-all duration-300 border",
+              "flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300 border",
               player.id === storyteller.playerId
-                ? "border-amber-500/50 bg-amber-500/5"
+                ? "border-amber-500/50 bg-amber-500/10"
                 : "border-zinc-800 bg-zinc-900/30"
             )}
           >
-            <div className="flex items-center gap-2 mb-2">
-              <span
-                className={cn(
-                  "w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center text-white",
-                  PLAYER_COLORS[player.id].bg
-                )}
-              >
-                {player.name[0]}
-              </span>
-              <span className={cn("text-sm font-medium", PLAYER_COLORS[player.id].text)}>
-                {player.name}
-              </span>
-              {player.id === storyteller.playerId && (
-                <span className="text-xs text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded">
-                  Storyteller
-                </span>
+            <span
+              className={cn(
+                "w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center text-white",
+                PLAYER_COLORS[player.id].bg
               )}
-            </div>
-
-            {/* Player's hand — face down */}
-            {phaseGte(currentPhase, "setup") && (
-              <div className="flex gap-1 flex-wrap">
-                {player.hand.map((cardId) => (
-                  <Card
-                    key={cardId}
-                    cardId={cardId}
-                    faceUp={false}
-                    size="sm"
-                  />
-                ))}
-              </div>
+            >
+              {player.name[0]}
+            </span>
+            <span className={cn("text-xs font-medium", PLAYER_COLORS[player.id].text)}>
+              {player.name}
+            </span>
+            {player.id === storyteller.playerId && (
+              <span className="text-[10px] text-amber-400">★</span>
             )}
+            {/* Tiny card backs */}
+            <div className="flex gap-0.5 ml-1">
+              {player.hand.map((cardId) => (
+                <div
+                  key={cardId}
+                  className="w-3 h-4 rounded-sm bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-800 border border-zinc-700/50"
+                />
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -162,42 +152,42 @@ export function GameBoard({ roundResult, onNewRound }: GameBoardProps) {
         />
       )}
 
-      {/* Face-up cards */}
+      {/* Face-up cards — BIG and prominent */}
       {phaseGte(currentPhase, "cards-revealed") && (
         <div>
-          <p className="text-sm text-zinc-500 text-center mb-3">
-            {phaseGte(currentPhase, "results")
-              ? ""
-              : "Which card did the storyteller play?"}
-          </p>
-          <div className="flex justify-center gap-4">
+          {!phaseGte(currentPhase, "results") && (
+            <p className="text-sm text-zinc-500 text-center mb-3">
+              Which card did the storyteller play?
+            </p>
+          )}
+          <div className="flex justify-center gap-5">
             {faceUpCards.map((fc) => {
               const isStoryteller = isStorytellerCard(fc.cardId);
               const showResults = phaseGte(currentPhase, "results");
               return (
-              <div key={fc.displayIndex} className="text-center">
-                <p className="text-xs text-zinc-500 mb-1">#{fc.displayIndex + 1}</p>
-                <Card
-                  cardId={fc.cardId}
-                  faceUp
-                  size="lg"
-                  correct={showResults && isStoryteller ? true : undefined}
-                  votes={getVotesForCard(fc.cardId)}
-                />
-                {showResults && (
-                  <div className="mt-1">
-                    {isStoryteller ? (
-                      <span className="inline-block text-xs font-bold text-amber-400 bg-amber-400/15 px-2 py-0.5 rounded-full border border-amber-400/30">
-                        ★ {players[fc.submittedBy].name}&apos;s card (Storyteller)
-                      </span>
-                    ) : (
-                      <p className="text-xs text-zinc-500">
-                        {players[fc.submittedBy].name}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
+                <div key={fc.displayIndex} className="text-center">
+                  <p className="text-xs text-zinc-500 mb-1">#{fc.displayIndex + 1}</p>
+                  <Card
+                    cardId={fc.cardId}
+                    faceUp
+                    size="xl"
+                    correct={showResults && isStoryteller ? true : undefined}
+                    votes={getVotesForCard(fc.cardId)}
+                  />
+                  {showResults && (
+                    <div className="mt-2">
+                      {isStoryteller ? (
+                        <span className="inline-block text-xs font-bold text-amber-400 bg-amber-400/15 px-2 py-0.5 rounded-full border border-amber-400/30">
+                          ★ {players[fc.submittedBy].name}&apos;s card (Storyteller)
+                        </span>
+                      ) : (
+                        <p className="text-xs text-zinc-500">
+                          {players[fc.submittedBy].name}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
