@@ -42,7 +42,7 @@ export function Card({
           "border-2",
           selected && "border-amber-400 shadow-lg shadow-amber-400/30",
           highlighted && "border-blue-400 shadow-lg shadow-blue-400/30",
-          correct === true && "border-emerald-400 shadow-lg shadow-emerald-400/30",
+          correct === true && "border-4 border-amber-400 shadow-xl shadow-amber-400/40 ring-2 ring-amber-400/50",
           incorrect === true && "border-red-400 shadow-lg shadow-red-400/30",
           !selected && !highlighted && correct === undefined && incorrect === undefined && "border-zinc-700",
           faceUp ? "rotate-y-0" : "rotate-y-180"

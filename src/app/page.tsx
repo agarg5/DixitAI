@@ -1,25 +1,89 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { RoundResult } from "@/lib/types";
 import { GameBoard } from "@/components/game-board";
+import { LoadingAnimation, type StreamProgress } from "@/components/loading-animation";
 
 export default function Home() {
   const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState<StreamProgress>({ phase: "setup" });
+  const abortRef = useRef<AbortController | null>(null);
 
   async function startNewRound() {
     setLoading(true);
     setError(null);
     setRoundResult(null);
+    setProgress({ phase: "setup" });
+
+    abortRef.current = new AbortController();
 
     try {
-      const res = await fetch("/api/game/round", { method: "POST" });
+      const res = await fetch("/api/game/round", {
+        method: "POST",
+        signal: abortRef.current.signal,
+      });
       if (!res.ok) throw new Error(`Server error: ${res.status}`);
-      const data: RoundResult = await res.json();
-      setRoundResult(data);
+
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error("No response body");
+
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          const dataMatch = line.match(/^data: (.+)$/m);
+          if (!dataMatch) continue;
+
+          try {
+            const { event, data } = JSON.parse(dataMatch[1]);
+
+            switch (event) {
+              case "setup":
+                setProgress({ phase: "setup" });
+                break;
+              case "phase":
+                setProgress((prev) => ({
+                  ...prev,
+                  phase: data.phase,
+                  playerName: data.playerName,
+                }));
+                break;
+              case "clue":
+                setProgress((prev) => ({
+                  ...prev,
+                  phase: "clue",
+                  clue: data.clue,
+                  storytellerName: data.storytellerName,
+                }));
+                break;
+              case "complete":
+                setRoundResult(data as RoundResult);
+                break;
+              case "error":
+                throw new Error(data.message);
+            }
+          } catch (e) {
+            if (e instanceof Error && e.message !== "Failed to run game round") {
+              // JSON parse error, skip
+            } else {
+              throw e;
+            }
+          }
+        }
+      }
     } catch (err) {
+      if (err instanceof Error && err.name === "AbortError") return;
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setLoading(false);
@@ -51,14 +115,7 @@ export default function Home() {
         </div>
       )}
 
-      {loading && (
-        <div className="flex flex-col items-center gap-4 mt-16">
-          <div className="w-10 h-10 border-3 border-amber-400 border-t-transparent rounded-full animate-spin" />
-          <p className="text-zinc-400 text-sm">
-            Running the round... AI players are thinking (this takes 30-60 seconds)
-          </p>
-        </div>
-      )}
+      {loading && <LoadingAnimation progress={progress} />}
 
       {error && (
         <div className="text-center mt-16">

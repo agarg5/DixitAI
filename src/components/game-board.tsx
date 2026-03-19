@@ -167,28 +167,39 @@ export function GameBoard({ roundResult, onNewRound }: GameBoardProps) {
         <div>
           <p className="text-sm text-zinc-500 text-center mb-3">
             {phaseGte(currentPhase, "results")
-              ? "The storyteller's card is highlighted in gold"
+              ? ""
               : "Which card did the storyteller play?"}
           </p>
           <div className="flex justify-center gap-4">
-            {faceUpCards.map((fc) => (
+            {faceUpCards.map((fc) => {
+              const isStoryteller = isStorytellerCard(fc.cardId);
+              const showResults = phaseGte(currentPhase, "results");
+              return (
               <div key={fc.displayIndex} className="text-center">
                 <p className="text-xs text-zinc-500 mb-1">#{fc.displayIndex + 1}</p>
                 <Card
                   cardId={fc.cardId}
                   faceUp
                   size="lg"
-                  correct={phaseGte(currentPhase, "results") && isStorytellerCard(fc.cardId) ? true : undefined}
+                  correct={showResults && isStoryteller ? true : undefined}
                   votes={getVotesForCard(fc.cardId)}
                 />
-                {phaseGte(currentPhase, "results") && (
-                  <p className="text-xs text-zinc-500 mt-1">
-                    {players[fc.submittedBy].name}
-                    {isStorytellerCard(fc.cardId) && " ★"}
-                  </p>
+                {showResults && (
+                  <div className="mt-1">
+                    {isStoryteller ? (
+                      <span className="inline-block text-xs font-bold text-amber-400 bg-amber-400/15 px-2 py-0.5 rounded-full border border-amber-400/30">
+                        ★ {players[fc.submittedBy].name}&apos;s card (Storyteller)
+                      </span>
+                    ) : (
+                      <p className="text-xs text-zinc-500">
+                        {players[fc.submittedBy].name}
+                      </p>
+                    )}
+                  </div>
                 )}
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
