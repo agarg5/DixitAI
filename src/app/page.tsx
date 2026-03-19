@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 import type { GameMode, RoundResult } from "@/lib/types";
@@ -25,7 +25,8 @@ function pickRandomCards(count: number): number[] {
 export default function Home() {
   const [mode, setMode] = useState<GameMode | null>(null);
   const [showRoleChoice, setShowRoleChoice] = useState(false);
-  const decorativeCards = useMemo(() => pickRandomCards(6), []);
+  const [decorativeCards, setDecorativeCards] = useState<number[]>([]);
+  useEffect(() => { setDecorativeCards(pickRandomCards(6)); }, []);
 
   // Spectator mode state
   const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
