@@ -150,6 +150,22 @@ export default function Home() {
       {/* Mode selector */}
       {!mode && !showRoleChoice && (
         <div className="flex flex-col items-center gap-6 mt-8">
+          {/* How it works */}
+          <div className="flex gap-6 text-center text-xs text-zinc-500 max-w-lg">
+            <div>
+              <span className="text-amber-400 font-semibold block mb-0.5">1. Deal</span>
+              Each player gets 6 surreal art cards
+            </div>
+            <div>
+              <span className="text-amber-400 font-semibold block mb-0.5">2. Clue</span>
+              The storyteller picks a card and gives a cryptic clue
+            </div>
+            <div>
+              <span className="text-amber-400 font-semibold block mb-0.5">3. Guess</span>
+              Everyone plays a card &mdash; then votes on which is the storyteller&apos;s
+            </div>
+          </div>
+
           <p className="text-zinc-500 text-sm">Choose how you want to play</p>
           <div className="flex gap-4">
             <button
