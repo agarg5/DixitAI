@@ -12,7 +12,7 @@ import { Card } from "@/components/card";
 import { TOTAL_CARDS } from "@/lib/cards";
 import { cn } from "@/lib/utils";
 
-// Pick 8 random card IDs for the decorative display
+// Pick random card IDs for the decorative display
 function pickRandomCards(count: number): number[] {
   const ids = Array.from({ length: TOTAL_CARDS }, (_, i) => i);
   for (let i = ids.length - 1; i > 0; i--) {
@@ -25,7 +25,7 @@ function pickRandomCards(count: number): number[] {
 export default function Home() {
   const [mode, setMode] = useState<GameMode | null>(null);
   const [showRoleChoice, setShowRoleChoice] = useState(false);
-  const decorativeCards = useMemo(() => pickRandomCards(8), []);
+  const decorativeCards = useMemo(() => pickRandomCards(6), []);
 
   // Spectator mode state
   const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
@@ -145,13 +145,6 @@ export default function Home() {
               ? "Watch 4 AI players compete in Dixit"
               : "The AI card game"}
         </p>
-        <Link
-          href="/generate"
-          className="inline-flex items-center gap-1.5 mt-3 px-3 py-1.5 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-400 text-xs hover:text-amber-400 hover:border-amber-500/30 transition-colors"
-        >
-          <Sparkles className="w-3 h-3" />
-          Card Studio
-        </Link>
       </header>
 
       {/* Mode selector */}
@@ -193,11 +186,30 @@ export default function Home() {
           </div>
 
           {/* Decorative Dixit cards */}
-          <div className="mt-8 flex justify-center gap-3 opacity-40">
+          <div className="mt-10 flex justify-center gap-4">
             {decorativeCards.map((cardId) => (
-              <Card key={cardId} cardId={cardId} faceUp size="sm" />
+              <Card key={cardId} cardId={cardId} faceUp size="md" />
             ))}
           </div>
+
+          {/* Card Studio link */}
+          <Link
+            href="/generate"
+            className={cn(
+              "mt-8 flex items-center gap-3 px-6 py-4 rounded-xl border-2 transition-all",
+              "border-purple-500/30 bg-purple-500/5 hover:border-purple-500/60 hover:bg-purple-500/10"
+            )}
+          >
+            <Sparkles className="w-5 h-5 text-purple-400 shrink-0" />
+            <div className="text-left">
+              <div className="text-sm font-semibold text-purple-400">
+                Card Studio
+              </div>
+              <p className="text-xs text-zinc-500">
+                Generate your own surreal Dixit-style cards with AI.
+              </p>
+            </div>
+          </Link>
         </div>
       )}
 
