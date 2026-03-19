@@ -20,7 +20,7 @@ import {
   calculateScores,
 } from "@/lib/game-engine";
 
-const PLAYER_NAMES = ["You", "Bob", "Carol", "Dave"];
+const PLAYER_NAMES = ["You", "Analyst", "Poet", "Trickster"];
 const HUMAN_PLAYER_ID: PlayerId = 0;
 
 export interface HumanRoundState {

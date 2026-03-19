@@ -2,7 +2,7 @@ import type { PlayerId, Player, RoundResult } from "@/lib/types";
 import { buildDeck, shuffle, dealHands, shuffleFaceUpCards, calculateScores } from "@/lib/game-engine";
 import { storytellerPickCard, selectCard, voteForCard } from "@/lib/ai-player";
 
-const PLAYER_NAMES = ["Alice", "Bob", "Carol", "Dave"];
+const PLAYER_NAMES = ["Dreamer", "Analyst", "Poet", "Trickster"];
 
 export async function POST() {
   const encoder = new TextEncoder();
