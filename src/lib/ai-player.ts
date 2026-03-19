@@ -16,20 +16,15 @@ import {
   VOTER_SYSTEM,
 } from "./prompts";
 
-// Different temperature per role to create diversity
+// Single model — temperature is passed per-call for diversity
+const model = openai("gpt-4o");
+
+// Temperature per role to create diversity
 // Storyteller: high temp = more creative, surprising clues
-// Voters: varied temps = different interpretation styles
-const storytellerModel = openai("gpt-4o", { temperature: 1.2 });
-const selectorModels = [
-  openai("gpt-4o", { temperature: 0.6 }),  // Player 1: analytical
-  openai("gpt-4o", { temperature: 0.9 }),  // Player 2: balanced
-  openai("gpt-4o", { temperature: 1.1 }),  // Player 3: creative/loose
-];
-const voterModels = [
-  openai("gpt-4o", { temperature: 0.5 }),  // Player 1: careful voter
-  openai("gpt-4o", { temperature: 0.8 }),  // Player 2: moderate
-  openai("gpt-4o", { temperature: 1.0 }),  // Player 3: intuitive
-];
+// Selectors/Voters: varied temps = different interpretation styles
+const STORYTELLER_TEMP = 1.2;
+const SELECTOR_TEMPS = [0.6, 0.9, 1.1]; // analytical, balanced, creative
+const VOTER_TEMPS = [0.5, 0.8, 1.0];    // careful, moderate, intuitive
 
 // Subtle interpretation biases per player (appended to system prompts)
 const PLAYER_BIASES = [
@@ -39,13 +34,12 @@ const PLAYER_BIASES = [
   "\n\nYour interpretation style: You tend to make unusual, lateral connections — thinking of idioms, cultural references, and wordplay.",
 ];
 
-function getSelectorModel(playerId: PlayerId) {
-  // Players 1-3 map to indices 0-2
-  return selectorModels[playerId - 1] || selectorModels[0];
+function getSelectorTemp(playerId: PlayerId) {
+  return SELECTOR_TEMPS[playerId - 1] ?? SELECTOR_TEMPS[0];
 }
 
-function getVoterModel(playerId: PlayerId) {
-  return voterModels[playerId - 1] || voterModels[0];
+function getVoterTemp(playerId: PlayerId) {
+  return VOTER_TEMPS[playerId - 1] ?? VOTER_TEMPS[0];
 }
 
 function getPlayerBias(playerId: PlayerId) {
@@ -59,7 +53,8 @@ export async function storytellerPickCard(
   try {
     // Step 1: Pick card and draft initial clue
     const { output: draft } = await generateText({
-      model: storytellerModel,
+      model,
+      temperature: STORYTELLER_TEMP,
       output: Output.object({
         schema: z.object({
           chosenCardIndex: z.number().int().min(0).max(5),
@@ -83,7 +78,8 @@ export async function storytellerPickCard(
 
     // Step 2: Self-critique and refine the clue
     const { output: refined } = await generateText({
-      model: storytellerModel,
+      model,
+      temperature: STORYTELLER_TEMP,
       output: Output.object({
         schema: z.object({
           refinedClue: z.string().describe("The improved clue"),
@@ -145,7 +141,8 @@ export async function selectCard(
 ): Promise<CardSelectionResult> {
   try {
     const { output } = await generateText({
-      model: getSelectorModel(playerId),
+      model,
+      temperature: getSelectorTemp(playerId),
       output: Output.object({
         schema: z.object({
           chosenCardIndex: z
@@ -204,7 +201,8 @@ export async function voteForCard(
 
   try {
     const { output } = await generateText({
-      model: getVoterModel(playerId),
+      model,
+      temperature: getVoterTemp(playerId),
       output: Output.object({
         schema: z.object({
           votedCardIndex: z

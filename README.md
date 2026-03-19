@@ -20,6 +20,7 @@ The AI players use GPT-4o vision to "see" the card artwork and make their decisi
 
 - **Play with AIs** — You are a player alongside 3 AI opponents. Pick cards, write clues, and vote.
 - **Watch AI Play** — Sit back and watch 4 AI players compete. Great for seeing how AI interprets visual art.
+- **Card Studio** (`/generate`) — Generate your own surreal Dixit-style card art with AI. Type a scene description or hit "Surprise me" for a random prompt. Uses DALL-E 3 for image generation with GPT-4o for creative prompt inspiration.
 
 ## Getting Started
 
@@ -71,11 +72,13 @@ Open [http://localhost:3000](http://localhost:3000) and choose your game mode.
 src/
 ├── app/
 │   ├── page.tsx              # Home page with mode selector
+│   ├── generate/page.tsx     # Card Studio — AI image generator
 │   └── api/game/
 │       ├── round/            # Spectator mode (full AI round)
 │       ├── storyteller/      # AI storyteller endpoint
 │       ├── select-card/      # AI card selection endpoint
 │       └── vote/             # AI vote endpoint
+│   └── api/generate/         # Card Studio image generation
 ├── components/
 │   ├── game-board.tsx        # Game replay/display
 │   ├── human-round-view.tsx  # Interactive human player UI
