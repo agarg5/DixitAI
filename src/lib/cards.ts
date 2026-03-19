@@ -1,0 +1,102 @@
+export interface CardEntry {
+  id: number;
+  filename: string;
+  url: string;
+}
+
+export const CARD_MANIFEST: CardEntry[] = [
+  "dixit_card_1_72dpi.png",
+  "dixit_card_2_72dpi.png",
+  "dixit_card_3_72dpi.png",
+  "dixit_card_4_72dpi.png",
+  "dixit_card_5_72dpi.png",
+  "dixit_card_6_72dpi.png",
+  "dixit_3_card_1_72dpi.png",
+  "dixit_3_card_2_72dpi.png",
+  "dixit_3_card_3_72dpi.png",
+  "dixit_3_card_4_72dpi.png",
+  "dixit_3_card_5_72dpi.png",
+  "dixit_3_card_6_72dpi.png",
+  "dixit_4_card_1_72dpi.png",
+  "dixit_4_card_2_72dpi.png",
+  "dixit_4_card_3_72dpi.png",
+  "dixit_4_card_4_72dpi.png",
+  "dixit_4_card_5_72dpi.png",
+  "dixit_4_card_6_72dpi.png",
+  "dixit_5_card_1_72dpi.png",
+  "dixit_5_card_2_72dpi.png",
+  "dixit_5_card_3_72dpi.png",
+  "dixit_5_card_4_72dpi.png",
+  "dixit_5_card_5_72dpi.png",
+  "dixit_5_card_6_72dpi.png",
+  "dixit_6_card_1_72dpi.png",
+  "dixit_6_card_2_72dpi.png",
+  "dixit_6_card_3_72dpi.png",
+  "dixit_6_card_4_72dpi.png",
+  "dixit_6_card_5_72dpi.png",
+  "dixit_6_card_6_72dpi.png",
+  "dixit_7_card_1_72dpi.png",
+  "dixit_7_card_2_72dpi.png",
+  "dixit_7_card_3_72dpi.png",
+  "dixit_7_card_4_72dpi.png",
+  "dixit_7_card_5_72dpi.png",
+  "dixit_7_card_6_72dpi.png",
+  "dixit_8_card_1_72dpi.png",
+  "dixit_8_card_2_72dpi.png",
+  "dixit_8_card_3_72dpi.png",
+  "dixit_8_card_4_72dpi.png",
+  "dixit_8_card_5_72dpi.png",
+  "dixit_8_card_6_72dpi.png",
+  "dixit_9_card_1_72dpi.png",
+  "dixit_9_card_2_72dpi.png",
+  "dixit_9_card_3_72dpi.png",
+  "dixit_9_card_4_72dpi.png",
+  "dixit_9_card_5_72dpi.png",
+  "dixit_9_card_6_72dpi.png",
+  "dixit_9_card_7_72dpi.png",
+  "dixit_9_card_8_72dpi.png",
+  "dixit_9_card_9_72dpi.png",
+  "dixit_9_card_10_72dpi.png",
+  "dixit_9_card_11_72dpi.png",
+  "dixit_9_card_12_72dpi.png",
+  "dixit_9_card_13_72dpi.png",
+  "dixit_9_card_14_72dpi.png",
+  "dixit_9_card_15_72dpi.png",
+  "dixit_10_card_1_72dpi.png",
+  "dixit_10_card_2_72dpi.png",
+  "dixit_10_card_3_72dpi.png",
+  "dixit_10_card_4_72dpi.png",
+  "dixit_10_card_5_72dpi.png",
+  "dixit_10_card_6_72dpi.png",
+  "dixit_10_card_7_72dpi.png",
+  "dixit_10_card_8_72dpi.png",
+  "dixit_10_card_9_72dpi.png",
+  "dixit_10_card_10_72dpi.png",
+  "dixit_10_card_11_72dpi.png",
+  "dixit_odyssey_card_1_72dpi.png",
+  "dixit_odyssey_card_2_72dpi.png",
+  "dixit_odyssey_card_3_72dpi.png",
+  "dixit_odyssey_card_4_72dpi.png",
+  "dixit_odyssey_card_5_72dpi.png",
+  "dixit_odyssey_card_6_72dpi.png",
+  "dixit_quest_card_1_72dpi.png",
+  "dixit_quest_card_2_72dpi.png",
+  "dixit_quest_card_3_72dpi.png",
+  "dixit_quest_card_4_72dpi.png",
+  "dixit_quest_card_5_72dpi.png",
+  "dixit_quest_card_6_72dpi.png",
+].map((filename, index) => ({
+  id: index,
+  filename,
+  url: `/cards/${filename}`,
+}));
+
+export function getCardUrl(cardId: number): string {
+  return CARD_MANIFEST[cardId].url;
+}
+
+export function getCardFilename(cardId: number): string {
+  return CARD_MANIFEST[cardId].filename;
+}
+
+export const TOTAL_CARDS = CARD_MANIFEST.length;
