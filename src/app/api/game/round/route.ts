@@ -40,18 +40,14 @@ export async function POST() {
 
         send("clue", { clue: storytellerResult.clue, storytellerName: PLAYER_NAMES[storytellerId] });
 
-        // 3. Other players select cards
-        const cardSelections = [];
-        for (const player of players) {
-          if (player.id === storytellerId) continue;
-          send("phase", { phase: "selecting", playerName: player.name });
-          const selection = await selectCard(
-            player.id,
-            player.hand,
-            storytellerResult.clue
-          );
-          cardSelections.push(selection);
-        }
+        // 3. Other players select cards (parallel — each player only sees their own hand + clue)
+        const nonStorytellers = players.filter((p) => p.id !== storytellerId);
+        send("phase", { phase: "selecting", playerNames: nonStorytellers.map((p) => p.name) });
+        const cardSelections = await Promise.all(
+          nonStorytellers.map((player) =>
+            selectCard(player.id, player.hand, storytellerResult.clue)
+          )
+        );
 
         // 4. Collect submissions and shuffle face-up
         const submissions = [
@@ -63,18 +59,18 @@ export async function POST() {
         ];
         const faceUpCards = shuffleFaceUpCards(submissions);
 
-        // 5. Non-storytellers vote
+        // 5. Non-storytellers vote (parallel — each voter sees the same face-up cards independently)
         send("phase", { phase: "voting" });
-        const votes = [];
-        for (const selection of cardSelections) {
-          const vote = await voteForCard(
-            selection.playerId,
-            faceUpCards,
-            selection.chosenCard,
-            storytellerResult.clue
-          );
-          votes.push(vote);
-        }
+        const votes = await Promise.all(
+          cardSelections.map((selection) =>
+            voteForCard(
+              selection.playerId,
+              faceUpCards,
+              selection.chosenCard,
+              storytellerResult.clue
+            )
+          )
+        );
 
         // 6. Calculate scores
         const allPlayerIds = players.map((p) => p.id);

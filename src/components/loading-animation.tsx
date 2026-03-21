@@ -16,7 +16,7 @@ function getPhaseLabel(progress: StreamProgress): string {
     case "clue":
       return "Players are choosing cards to match the clue...";
     case "selecting":
-      return `${progress.playerName} is choosing a card...`;
+      return "All players are choosing cards...";
     case "voting":
       return "Players are voting...";
     default:
