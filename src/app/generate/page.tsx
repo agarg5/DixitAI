@@ -100,7 +100,7 @@ export default function GeneratePage() {
       {/* Loading state */}
       {generating && (
         <div className="mt-12 flex flex-col items-center gap-4">
-          <div className="w-64 h-64 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center overflow-hidden">
+          <div className="w-72 h-[432px] rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center overflow-hidden">
             <div className="relative">
               <div className="w-12 h-12 rounded-full border-2 border-amber-400 border-t-transparent animate-spin" />
               <Sparkles className="absolute inset-0 m-auto w-5 h-5 text-amber-400 animate-pulse" />
@@ -128,7 +128,7 @@ export default function GeneratePage() {
       {/* Result */}
       {result && (
         <div className="mt-8 flex flex-col items-center gap-4">
-          <div className="w-80 h-80 rounded-xl overflow-hidden border-2 border-zinc-700 shadow-2xl shadow-amber-500/10">
+          <div className="w-72 h-[432px] rounded-xl overflow-hidden border-2 border-zinc-700 shadow-2xl shadow-amber-500/10">
             <img
               src={result.imageUrl}
               alt={result.prompt}
