@@ -25,6 +25,8 @@ const PLAYER_COLORS = [
   { bg: "bg-rose-500", text: "text-rose-400" },
 ];
 
+const PLAYER_AVATARS = ["🧑", "🔍", "✒️", "🃏"];
+
 export function HumanRoundView({
   state,
   onSubmitStorytellerChoice,
@@ -70,10 +72,8 @@ export function HumanRoundView({
                   : "border-zinc-800 bg-zinc-900/30"
               }`}
             >
-              <span
-                className={`w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center text-white ${PLAYER_COLORS[player.id].bg}`}
-              >
-                {player.name[0]}
+              <span className="text-base leading-none" title={player.name}>
+                {PLAYER_AVATARS[player.id]}
               </span>
               <span className={`text-xs font-medium ${PLAYER_COLORS[player.id].text}`}>
                 {player.name}

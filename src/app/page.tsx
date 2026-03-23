@@ -205,7 +205,7 @@ export default function Home() {
           {/* Decorative Dixit cards */}
           <div className="mt-10 flex justify-center gap-4">
             {decorativeCards.map((cardId) => (
-              <Card key={cardId} cardId={cardId} faceUp size="md" />
+              <Card key={cardId} cardId={cardId} faceUp size="lg" />
             ))}
           </div>
 
