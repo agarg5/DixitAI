@@ -2,7 +2,9 @@
 
 An AI-powered version of the popular card game [Dixit](https://en.wikipedia.org/wiki/Dixit_(card_game)), where you can play against AI opponents or watch them compete against each other.
 
-<!-- TODO: Add screenshot/GIF here -->
+https://www.loom.com/share/eed74207fe9c4fe881fe56760dc8f404
+
+[![Watch the demo](https://cdn.loom.com/sessions/thumbnails/eed74207fe9c4fe881fe56760dc8f404-with-play.gif)](https://www.loom.com/share/eed74207fe9c4fe881fe56760dc8f404)
 
 ## How It Works
 
