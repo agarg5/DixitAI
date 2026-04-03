@@ -114,7 +114,7 @@ Rules for refinement:
     });
 
     const idx = Math.min(Math.max(0, draft.chosenCardIndex), hand.length - 1);
-    const finalClue = refined?.refinedClue || draft.clue;
+    const finalClue = (refined?.refinedClue || draft.clue).replace(/^[""\u201C\u201D]+|[""\u201C\u201D]+$/g, '');
 
     return {
       playerId,
