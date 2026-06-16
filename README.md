@@ -4,7 +4,7 @@ An AI-powered version of the popular card game [Dixit](https://en.wikipedia.org/
 
 https://www.loom.com/share/eed74207fe9c4fe881fe56760dc8f404
 
-[![Watch the demo](https://cdn.loom.com/sessions/thumbnails/eed74207fe9c4fe881fe56760dc8f404-with-play.gif)](https://www.loom.com/share/eed74207fe9c4fe881fe56760dc8f404)
+[Watch the demo](https://www.loom.com/share/eed74207fe9c4fe881fe56760dc8f404)
 
 ## How It Works
 
